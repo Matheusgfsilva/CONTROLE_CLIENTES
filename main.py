@@ -1,27 +1,39 @@
-from cliente_controller import lines, register, list, find, deleteall, deleteone, update
-
-lines("CONTROLE DE CLIENTES")
+from cliente_controller import lines, register, list, find, deleteall, deleteone, update, seed_test_data
+import re
+from rich.console import Console
+console = Console()
 
 while True:
-    choice = int(input("REGISTRAR CLIENTES[1]\n" \
-                        "LISTAR CLIENTES[2]\n" \
-                        "DETALHAR CLIENTE[3]\n" \
-                        "DELETAR UM CLIENTE[4]\n" \
-                        "DELETAR TODOS OS CLIENTES[5]\n" \
-                        "ATUALIZAR CLIENTE[6]\n" \
-                        "SAIR[9]\n\n" \
-                        "Digite: "))
-    if choice == 1:
+    console.print("\n========= MENU =========", style="bold white")
+    console.print("[0] GERAR DADOS DE TESTE AUTOMÁTICOS", style="cyan")
+    console.print("[1] REGISTRAR CLIENTES", style="cyan")
+    console.print("[2] LISTAR CLIENTES", style="cyan")
+    console.print("[3] ESPECIFICAR CLIENTE", style="cyan")
+    console.print("[4] DELETAR UM CLIENTE", style="cyan")
+    console.print("[5] DELETAR TODOS OS CLIENTES", style="cyan")
+    console.print("[6] ALTERAR CLIENTE", style="cyan")
+    console.print("[9] SAIR", style="cyan")
+    console.print("(sempre digite 9 para interromper um processo)", style="dim")
+
+    choice = str(input("Digite: "))
+    if choice == "0":
+        seed_test_data()
+    elif choice == "1":
         register()
-    if choice == 2:
+    elif choice == "2":
         list()
-    if choice == 3:
+    elif choice == "3":
         find()
-    if choice == 4:
+    elif choice == "4":
         deleteone()
-    if choice == 5:
+    elif choice == "5":
         deleteall()
-    if choice == 6:
+    elif choice == "6":
         update()
-    if choice == 9:
+    elif choice == "9":
+        console.print("Muito obrigado pela escolha, até a próxima!", style="bold yellow")
         break
+    elif not choice:
+        console.print("\nO CAMPO NÃO PODE FICAR VAZIO", style="bold red")
+    else:
+        console.print("\nDIGITE UM NÚMERO VÁLIDO", style="bold red")
