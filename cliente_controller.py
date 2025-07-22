@@ -325,7 +325,7 @@ def find():
     if clientes == None:
         return
     while True:
-        how_find = Prompt.ask("Você quer procurar por CPF[1], Nome[2], Telefone[3] ou E-mail[4]?").strip()
+        how_find = Prompt.ask("Você quer procurar por Nome[1], CPF[2], Telefone[3] ou E-mail[4]?").strip()
         if not how_find:
             print("[red]O campo não pode ficar vazio[/red]")
         elif quit(how_find):
@@ -336,29 +336,6 @@ def find():
             break
 
     if how_find == "1":
-        exist = False
-        cpf_client = Prompt.ask("Digite o CPF que voce quer pesquisar").strip()
-        if quit(cpf_client):
-            return
-        cpf_client = cpf_verf(cpf_client)
-        if not cpf_client:
-            return
-        for cliente in clientes:
-            if cliente['cpf'] == cpf_client:
-                print("")
-                print("-"*30)
-                print(f"[bold]Nome:[/] {cliente['nome']}")
-                print(f"[bold]CPF:[/] {cliente['cpf']}")
-                print(f"[bold]Telefone:[/] {cliente['cell']}")
-                print(f"[bold]E-mail:[/] {cliente['mail']}")
-                print("-"*30)
-                print("")
-                exist = True
-                break
-        if not exist:
-            print("[yellow]CPF não encontrado![/yellow]")
-
-    if how_find == "2":
         exist = False
         name_client = Prompt.ask("Nome do(s) cliente(s) que você quer pesquisar").strip().title()
         if quit(name_client):
@@ -382,14 +359,38 @@ def find():
         if exist == False:
             print("[yellow]Nome não encontrado![/yellow]")
 
+    if how_find == "2":
+        exist = False
+        cpf_client = Prompt.ask("Digite o CPF que voce quer pesquisar").strip()
+        if quit(cpf_client):
+            return
+        cpf_client = cpf_verf(cpf_client)
+        if not cpf_client:
+            return
+        for cliente in clientes:
+            if cliente['cpf'] == cpf_client:
+                print("")
+                print("-"*30)
+                print(f"[bold]Nome:[/] {cliente['nome']}")
+                print(f"[bold]CPF:[/] {cliente['cpf']}")
+                print(f"[bold]Telefone:[/] {cliente['cell']}")
+                print(f"[bold]E-mail:[/] {cliente['mail']}")
+                print("-"*30)
+                print("")
+                exist = True
+                break
+        if not exist:
+            print("[yellow]CPF não encontrado![/yellow]")
+
     if how_find == "3":
         exist = False
         cell_client = Prompt.ask("Digite o número que você quer pesquisar").strip()
         if quit(cell_client):
             return
-        cell_client = cellverf(cell_client)
-        if not cell_client:
+        cell_verificado = cellverf(cell_client)
+        if not cell_verificado:
             return
+        cell_client = cell_verificado
         print("")
         print("-"*30, "\n")
         for cliente in clientes:
@@ -409,9 +410,10 @@ def find():
         mail_client = Prompt.ask("Digite o e-mail que você quer pesquisar").strip()
         if quit(mail_client):
             return
-        mail_client = mail_verf(mail_client)
-        if not mail_client:
+        mail_verificado = mail_verf(mail_client)
+        if not mail_verificado:
             return
+        mail_client = mail_verificado
         print("")
         print("-"*30, "\n")
         for cliente in clientes:
@@ -433,7 +435,7 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
     
     while True:
         clientes_att = []
-        cliente_exist = False
+        cliente_encontrado = False
         confirm = "N"
         cpf_att = Prompt.ask("Digite o CPF do cliente que você deseja atualizar").strip()
         if quit(cpf_att):
@@ -441,10 +443,9 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
         cpf_att = cpf_verf(cpf_att)
         if not cpf_att:
             return
-        
+
         for cliente in clientes:
             if cliente['cpf'] == cpf_att:
-                cliente_exist = True
                 print("")
                 print(f"[bold]Nome:[/] {cliente['nome']}")
                 print(f"[bold]CPF:[/] {cliente['cpf']}")
@@ -468,32 +469,50 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
                             mail = cliente['mail']
 
                             if escolha == "1":
-                                nome = name_verf(Prompt.ask("Novo nome").strip())
+                                nome = name_verf(Prompt.ask("Novo nome").strip()).title()
                                 if not nome:
                                     return
                             elif escolha == "2":
-                                cpf = repeat_cpf(Prompt.ask("Novo CPF").strip())
+                                cpf_input = Prompt.ask("Novo CPF").strip()
+                                if quit(cpf_input):
+                                    return
+                                cpf = repeat_cpf(cpf_input)
                                 if not cpf:
                                     return
                             elif escolha == "3":
-                                cell = cellverf(Prompt.ask("Novo telefone").strip())
+                                cell_input = Prompt.ask("Novo telefone").strip()
+                                if quit(cell_input):
+                                    return
+                                cell = cellverf(cell_input)
                                 if not cell:
                                     return
                             elif escolha == "4":
-                                mail = mail_verf(Prompt.ask("Novo e-mail").strip())
+                                mail_input = Prompt.ask("Novo e-mail").strip()
+                                if quit(mail_input):
+                                    return
+                                mail = mail_verf(mail_input)
                                 if not mail:
                                     return
                             elif escolha == "5":
-                                nome = name_verf(Prompt.ask("Novo nome").strip())
+                                nome = name_verf(Prompt.ask("Novo nome").strip()).title()
                                 if not nome:
                                     return
-                                cpf = repeat_cpf(Prompt.ask("Novo CPF").strip())
+                                cpf_input = Prompt.ask("Novo CPF").strip()
+                                if quit(cpf_input):
+                                    return
+                                cpf = repeat_cpf(cpf_input)
                                 if not cpf:
                                     return
-                                cell = cellverf(Prompt.ask("Novo telefone").strip())
+                                cell_input = Prompt.ask("Novo telefone").strip()
+                                if quit(cell_input):
+                                    return
+                                cell = cellverf(cell_input)
                                 if not cell:
                                     return
-                                mail = mail_verf(Prompt.ask("Novo e-mail").strip())
+                                mail_input = Prompt.ask("Novo e-mail").strip()
+                                if quit(mail_input):
+                                    return
+                                mail = mail_verf(mail_input)
                                 if not mail:
                                     return
 
@@ -504,8 +523,9 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
                                 "cell": novo_cliente.cell,
                                 "mail": novo_cliente.mail
                             })
-                            break
-                        break
+                            break  # sai do loop de escolha
+                        cliente_encontrado = True
+                        break  # sai do loop de confirmação
                     elif confirm == "N":
                         break
                     elif not confirm:
@@ -515,14 +535,14 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
             else:
                 clientes_att.append(cliente)
 
-        if confirm == "S":       
-            break
+        if confirm == "S":
+            break  # sai do while True externo após atualização
 
-        if cliente_exist == False:
+        if not cliente_encontrado:
             print("[yellow]Cliente não encontrado[/yellow]")
             break
-        
-    if cliente_exist == True:
+
+    if cliente_encontrado:
         with open(DB_PATH, "w") as file:
             json.dump(clientes_att, file, indent=4)
         print("[green]Cliente atualizado[/green]")
@@ -530,14 +550,14 @@ def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
 def seed_test_data():
     clientes = [
         {"nome": "Mateus Gomes", "cpf": "127.561.224-59", "cell": "(83)99106-0871", "mail": "mateusgfs@gmail.com"},
-        {"nome": "Tiago Gomes", "cpf": "123.456.789-09", "cell": "(11)88888-8888", "mail": "tiago@email.com"},
-        {"nome": "Renata Silva", "cpf": "456.789.123-01", "cell": "(21)99999-9999", "mail": "renata@email.com"},
-        {"nome": "Elisa Barbosa", "cpf": "111.444.777-35", "cell": "(31)77777-7777", "mail": "elisa@email.com"},
-        {"nome": "Joelton Félix", "cpf": "741.852.963-06", "cell": "(41)66666-6666", "mail": "joelton@email.com"},
-        {"nome": "Letícia Gomes", "cpf": "159.753.486-20", "cell": "(51)55555-5555", "mail": "leticia@email.com"},
-        {"nome": "Nathalia Feitosa", "cpf": "321.654.987-98", "cell": "(61)44444-4444", "mail": "nathalia@email.com"},
-        {"nome": "Túlio Feitosa", "cpf": "987.654.321-00", "cell": "(71)33333-3333", "mail": "tulio@email.com"},
-        {"nome": "Leonardo Freire", "cpf": "852.741.963-03", "cell": "(81)22222-2222", "mail": "leonardo@email.com"},
+        {"nome": "Tiago Gomes", "cpf": "123.456.789-09", "cell": "(11)98888-1234", "mail": "tiago@email.com"},
+        {"nome": "Renata Silva", "cpf": "987.654.321-00", "cell": "(21)99999-4567", "mail": "renata@email.com"},
+        {"nome": "Elisa Barbosa", "cpf": "345.678.901-79", "cell": "(31)99777-7890", "mail": "elisa@email.com"},
+        {"nome": "Joelton Félix", "cpf": "111.222.333-96", "cell": "(41)99666-2345", "mail": "joelton@email.com"},
+        {"nome": "Letícia Gomes", "cpf": "222.333.444-05", "cell": "(51)99555-3456", "mail": "leticia@email.com"},
+        {"nome": "Nathalia Feitosa", "cpf": "456.789.123-64", "cell": "(61)99444-9876", "mail": "nathalia@email.com"},
+        {"nome": "Túlio Feitosa", "cpf": "789.123.456-64", "cell": "(71)99333-6789", "mail": "tulio@email.com"},
+        {"nome": "Leonardo Freire", "cpf": "321.654.987-91", "cell": "(81)99222-1122", "mail": "leonardo@email.com"},
     ]
 
     with open(DB_PATH, "w") as file:

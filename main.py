@@ -15,7 +15,7 @@ while True:
     console.print("[9] SAIR", style="cyan")
     console.print("(sempre digite 9 para interromper um processo)", style="dim")
 
-    choice = str(input("Digite: "))
+    choice = str(input("Digite: ")).strip()
     if choice == "0":
         seed_test_data()
     elif choice == "1":
