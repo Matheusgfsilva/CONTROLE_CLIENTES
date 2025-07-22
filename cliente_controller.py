@@ -40,20 +40,6 @@ def quit(any):
         return True
 
 def name_verf(nome):
-    #talvez add letra maiuscula nos sobrenomes
-    '''
-    FORMA ANTIGA
-
-    nome = input("Nome: ").strip().capitalize()
-    while True:
-        if not nome:
-            nome = input("O campo não pode ficar vazio!\nNome: ").strip().capitalize()
-        elif not re.fullmatch(r"[A-Za-zÀ-ÿ\s]+", nome):
-            nome = input("Digite somente letras!\nNome: ").strip().capitalize()
-        else:
-            return nome
-    '''
-
     while True:
         if not nome:
             print("[red]O campo não pode ficar vazio![/red]")
@@ -72,7 +58,7 @@ def cpf_verf(cpf):
         elif not re.fullmatch(r"[0-9.-]+", cpf):
             print("[red]Digite caracteres válidos![/red]")
         else: 
-            cpf_limpo = re.sub(r"[.-]", "", cpf) #o ruim que ele ainda pode digitar nas casas erradas
+            cpf_limpo = re.sub(r"[.-]", "", cpf) 
             if len(cpf_limpo) == 11:
                 # Verifica se todos os dígitos são iguais
                 if cpf_limpo == cpf_limpo[0] * 11:
@@ -152,7 +138,7 @@ def repeat_cpf(cpf):
         elif not re.fullmatch(r"[0-9.-]+", cpf):
             print("[red]Digite caracteres válidos![/red]")
         else: 
-            cpf_limpo = re.sub(r"[.-]", "", cpf) #o ruim que ele ainda pode digitar nas casas erradas
+            cpf_limpo = re.sub(r"[.-]", "", cpf) 
             if len(cpf_limpo) == 11:
                 # Verifica se todos os dígitos são iguais
                 if cpf_limpo == cpf_limpo[0] * 11:
@@ -179,7 +165,7 @@ def repeat_cpf(cpf):
         if quit(cpf):
             return(False)
 
-def register(): #ver como o quit fica mais organizado
+def register(): 
     nome = Prompt.ask("Nome").strip().title()
     if quit(nome):
         return
@@ -428,7 +414,7 @@ def find():
         if not exist:
             print("[yellow]E-mail não encontrado![/yellow]")
 
-def update(): #COMO QUEBRAR O FOR? TENHO QUE FAZER DE FORMA MAIS OTIMIZADA
+def update():
     clientes = db_confrim()
     if clientes == None:
         return
