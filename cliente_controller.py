@@ -127,10 +127,13 @@ def mail_verf(mail):
             return(False)
 
 def repeat_cpf(cpf):
-    clientes = db_confrim()
-    if clientes is None:
-        return
-    
+    with open(DB_PATH, "r") as file: #"r" é de read, ou seja, nao esta modificando nada
+        try:
+            clientes = json.load(file)
+        except json.JSONDecodeError:
+            print("\n[red]ERRO AO LER O ARQUIVO[/red]")
+            return None
+
     repeat = False
     while True:
         if not cpf:

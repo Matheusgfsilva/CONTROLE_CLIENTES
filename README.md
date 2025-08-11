@@ -1,5 +1,3 @@
-
-
 Controle de Clientes em Python
 
 Este projeto é um programa simples e funcional desenvolvido em Python para realizar o cadastro e gerenciamento de clientes, com armazenamento local em um arquivo JSON. Ele foi criado com foco em oferecer uma interface clara e intuitiva para que qualquer pessoa consiga registrar, visualizar, alterar e remover informações de clientes com facilidade.
